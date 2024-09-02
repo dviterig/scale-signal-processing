@@ -16,6 +16,7 @@ add_executable(main
     src/MockArduino.cpp
     src/main.cpp
     src/sensors/Scale.cpp
+    src/signal_processor/SignalProcessor.cpp
     src/timer/Timer.cpp
 )
 
