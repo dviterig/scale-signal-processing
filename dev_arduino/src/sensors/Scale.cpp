@@ -39,6 +39,11 @@ long parse_time_to_millis(const std::string &time_str)
     return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
 }
 
+void myOutputCallback(long startTime, double startWeight, long endTime, double endWeight) {
+    std::cout << "Start Time: " << startTime << " - Start Weight: " << startWeight << std::endl;
+    std::cout << "End Time: " << endTime << " - End Weight: " << endWeight << std::endl;
+}
+
 void Scale::begin()
 {
     // Read and store all the weight records from the data CSV file
@@ -64,6 +69,12 @@ void Scale::begin()
             weight : weight,
         });
     }
+
+    // Example usage
+    signalProcessor = new SignalProcessor(20.0, 5000/SPEEDUP_FACTOR);  // minOutputValue = 10, stabilizationTime = 5 seconds
+
+    // Subscribe to output data
+    signalProcessor->subscribeToOutput(myOutputCallback);
 }
 
 bool Scale::hasReading()
@@ -109,6 +120,8 @@ float Scale::getReading()
         _millis_offset += _weight_items[_last_read_index - 1].time_diff / SPEEDUP_FACTOR;
         _last_read_index = 0;
     }
+
+    signalProcessor->addData(_weight_items[_last_read_index].weight, _weight_items[_last_read_index].time_diff);
 
     return _weight_items[_last_read_index].weight;
 }

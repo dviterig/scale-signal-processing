@@ -2,6 +2,7 @@
 #define SCALE_H
 
 #include <vector>
+#include "signal_processor/SignalProcessor.h"
 
 // WeightItem is used internall to store an absolute time difference and weight for each
 // (to be simulated) weight record.
@@ -27,6 +28,7 @@ private:
     std::vector<WeightItem> _weight_items;
     int _last_read_index;
     unsigned long _millis_offset;
+    SignalProcessor* signalProcessor;
 };
 
 #endif
