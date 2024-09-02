@@ -16,6 +16,7 @@ add_executable(main
     src/MockArduino.cpp
     src/main.cpp
     src/sensors/Scale.cpp
+    src/timer/Timer.cpp
 )
 
 # Link libraries
