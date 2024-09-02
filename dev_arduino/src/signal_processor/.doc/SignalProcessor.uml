@@ -1,0 +1,15 @@
+@startuml
+scale 700 width
+
+state SignalProcessor {
+  Stable: onEntry: call OutputCallback
+  Stabilizing: onEntry: start SingleShot-Timer\n(interval=stabilization-time)
+
+  [*] --> Stable
+  Stable --> Stabilizing : add Data
+
+  Stabilizing --> Stable : timer interval\nexpires
+  Stabilizing --> Stabilizing : add Data: restart SingleShot-Timer\n(interval=stabilization-time)
+}
+@endumn
+@enduml
